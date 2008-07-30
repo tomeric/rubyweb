@@ -60,7 +60,5 @@ p.metadata a { color: #888; }
 .pagination .forward { float: right; text-align: right; }
 
 /* fancify */
-.date { font-size: 1.2em;
-  font-weight: bold;
-  margin: 0 0 16px 0; }
+.date { font-size: 1.2em; font-weight: bold; margin: 0 0 16px 0; }
 .ruby { font-weight: bold; color: #c00; }
