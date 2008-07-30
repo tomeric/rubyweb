@@ -62,3 +62,4 @@ p.metadata a { color: #888; }
 /* fancify */
 .date { font-size: 1.2em; font-weight: bold; margin: 0 0 16px 0; }
 .ruby { font-weight: bold; color: #c00; }
+.message { background: #eee; border: 1px solid #999; margin-bottom: 16px; padding: 8px; }
