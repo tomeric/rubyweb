@@ -5,9 +5,13 @@
   <%= safe(@item.content) %>
   
   <p class="metadata">
-    Geplaatst door: <%= link_to_if(@item.user, @item.user ? @item.user.login : @item.byline,
-                                               @item.user.url,
-                                               { :rel => @item.user.approved_for_feed? ? nil : 'nofollow' }) %>
+    Geplaatst door: 
+    <% if @item.user %>
+      <%= link_to_if(@item.user.url, @item.user.login, @item.user.url, 
+                     { :rel => @item.user.approved_for_feed? ? nil : 'nofollow' }) %>
+    <% else %>
+      <%= @item.byline %>
+    <% end %>
     om <%= @item.created_at.strftime("%R") %> - <%= link_to pluralize(@item.comments.size, 'reactie'), item_url(@item) %>
     <% if admin? %> | <%= link_to 'wijzigen', edit_item_path(@item) %> | <%= link_to 'verwijderen', @item, :confirm => 'Weet je het zeker?', :method => :delete %><% end %>
   </p>
