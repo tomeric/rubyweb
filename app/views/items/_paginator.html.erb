@@ -1,8 +1,14 @@
-<div class="leftright">
+<% if @page_number > 1 || @items_count > (@page_number * items_per_page) %>
+<p class="pagination">
   <% if @page_number > 1 %>
-    <div class="left"><a href="<%= @page_number == 2 ? root_url : url_for(:page => @page_number - 1) %>">&laquo; Newer</a></div>
+    <%= link_to  '&laquo; Nieuwer',
+                  @page_number == 2 ? root_url : url_for(:page => @page_number - 1),
+                  :class => 'back' %>
   <% end %>
   <% if @items_count > (@page_number * items_per_page) %>
-    <div class="right"><a href="<%= url_for(:page => @page_number + 1) %>">Older &raquo;</a></div>
+    <%= link_to   'Ouder &raquo;',
+                  url_for(:page => @page_number + 1),
+                  :class => 'forward' %>
   <% end %>
-</div>
+</p>
+<% end %>

@@ -1,15 +1,26 @@
-<style>
-TD { border: 1px }
-</style>
-<table cellspacing="4" border="1" cellpadding="2">
-<% @users.each do |user| %>
-  <tr>
-    <td>&nbsp;&nbsp;<%= user.id %>&nbsp;&nbsp;</td>
-    <td>&nbsp;&nbsp;<%= user.login %>&nbsp;&nbsp;</td>
-    <td>&nbsp;&nbsp;<%= user.url %>&nbsp;&nbsp;</td>
-    <td>&nbsp;&nbsp;<%= user.created_at.strftime("%b %d, %Y") %>&nbsp;&nbsp;</td>
-    <td>&nbsp;&nbsp;<%= user.approved_for_feed %>&nbsp;&nbsp;</td>
-    <td><%= link_to 'approve', :action => 'approve', :id => user.id %> | <%= link_to 'disapprove', :action => 'disapprove', :id => user.id %> | <%= link_to 'delete', :action => 'destroy', :id => user.id, :method => :post %></td>
-  </tr>
-<% end %>
+<table class="users">
+  <thead>
+    <tr>
+      <th class="id">ID</th>
+      <th class="login">Login</th>
+      <th class="url"><abbr title="Uniform Resource Locator">URL</abbr></th>
+      <th class="created-at">Registratiedatum</th>
+      <th class="approved">Goedgekeurd</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%- @users.each do |user| -%>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.login %></td>
+      <td><%= link_to(user.url, user.url) %></td>
+      <td><%= user.created_at.strftime("%d-%m-%Y") %></td>
+      <td><%= user.approved_for_feed %></td>
+      <td>
+        <%= link_to 'goedkeuren', :action => 'approve', :id => user.id %> |
+        <%= link_to 'afkeuren', :action => 'disapprove', :id => user.id %> |
+        <%= link_to 'verwijderen', :action => 'destroy', :id => user.id, :method => :post, :confirm => 'Weet je het zeker?' %>
+      </td>
+    </tr>
+  <%- end -%>
 </table>

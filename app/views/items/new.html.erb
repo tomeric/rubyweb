@@ -1,28 +1,30 @@
-<h1>Post An Item to the Flow</h1>
-
-
-<% form_for(@item) do |f| %>
-
-  
+<h1>Plaats een post op RubyWeb</h1>
 
 <%= error_messages_for :item %>
 
-<blockquote class="comment">
-  <span class="a">&#147;</span><span class="b">&#148;</span>
-
+<% form_for(@item) do |f| %>
+  <blockquote class="comment">
+    <% if logged_in? %>
+      <p>Plaats deze post als: <strong><%= current_user.login %></strong></p>
+    <% else %>
+      <p><em>Let op: Als je een geregistreerde gebruiker bent, <%= link_to 'log dan in', login_url %> om deze velden in te vullen.</em></p>
+    <% end %>
   
-<% if logged_in? %>
-  <p>Posting as <strong><%= current_user.login %></strong></p>
-<% else %>
-  <p><em>Note: If you are a registered user, <%= link_to 'log in', login_url %> to populate these fields.</em></p>
-  <p><%= f.text_field :byline %>
-  <label for="byline"> <small>Name / Byline (required)</small></label></p>
+    <dl class="questions">
+      <% unless logged_in? %>
+        <dt class="inline"><%= f.label :byline, 'Naam (verplicht)' %></dt>
+        <dd><%= f.text_field :byline %></dd>
+      <% end %>
+      <dt class="inline"><%= f.label :title, 'Titel (gebruikt voor archief paginas, <abbr title="etcetra">etc.</abbr>)' %></dt>
+      <dd><%= f.text_field :title %></dd>
+      <dt class="invisible"><%= f.label :content, 'Inhoud' %></dt>
+      <dd class="help">
+        <strong>Als je dat wilt, dan kun je de volgende <abbr title="HyperText Markup Language">HTML</abbr> elementen gebruiken in je artikel:</strong><br>
+        <code>&lt;a href=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strong&gt;</code>
+      </dd>
+      <dd><%= f.text_area :content, :cols => 60, :rows => 8 %></dd>
+    </dl>
+    <%= render :partial => 'users/captcha' unless logged_in? %>
+    <p class="submit"><%= f.submit "Plaats Post" %></p>
+  </blockquote>
 <% end %>
-<p><%= f.text_field :title %> <label for="title"><small>Title (used for archive pages, etc.)</small></label></p>
-<p style="font-size: 13px; background-color: #ffc; padding: 4px 16px; border-left: 3px solid #999; font-family: verdana; line-height: 15px; letter-spacing: 0px"><strong>If you wish, you may use these HTML tags to format your post:</strong><br /><code>&lt;a href=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strong&gt;</code><br /><br /><em>Yes, you <b>must use HTML</b> and not Textile or Markdown for now.</em></small></p>
-<p><%= f.text_area :content, :cols => 60, :rows => 8 %></p>
-<%= render :partial => 'home/signup_captcha' unless logged_in? %>
-<p><%= f.submit "Post Item" %></p>
-<% end %>
-
-</blockquote>

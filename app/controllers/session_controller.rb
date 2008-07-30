@@ -1,7 +1,5 @@
 # This controller handles the login/logout function of the site.  
 class SessionController < ApplicationController
-  layout 'main'
-  
   def new
   end
 
@@ -49,7 +47,7 @@ class SessionController < ApplicationController
     end
   end
 
-  def failed_login(message = "Authentication failed.")
+  def failed_login(message = "Authenticatie mislukt.")
     flash.now[:error] = message
     render :action => 'new'
   end
@@ -60,7 +58,7 @@ class SessionController < ApplicationController
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => 1.year.from_now }
     end
     redirect_back_or_default('/')
-    flash[:notice] = "Logged in successfully"
+    flash[:notice] = "Je bent nu ingelogd."
   end
 
 end

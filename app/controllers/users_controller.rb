@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
   before_filter :admin_required, :except => [:new, :create]
-  
-  layout 'main'
     
   def new
   end
@@ -20,7 +18,7 @@ class UsersController < ApplicationController
     if @user.errors.empty?
       self.current_user = @user
       redirect_back_or_default('/')
-      flash[:notice] = "Thanks for signing up! You have been logged in automagically!"
+      flash[:notice] = "Bedankt voor het registreren! Je bent nu automatisch ingelogd."
     else
       render :action => 'new'
     end

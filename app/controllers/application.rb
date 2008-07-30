@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
   
   def items_per_page
-    50
+    30
   end
   helper_method :items_per_page
   

@@ -4,6 +4,24 @@ module ApplicationHelper
     admin? || item.user == current_user
   end
   
+  def random_word
+    words      = %w{renegade nevergonna giveyouup letyoudown runaround starla luckystiff inside an at ax al pol paypal nidd nid pin pit pragmatic astley twogirls onecup felch kwyjibo covenham kenwick grimsby warlingham cooper macbook triumph air mascot football hockey tennis shadow bullet metaphor flyer twitter yahoo google coding ruby masterplan spyhole porthole boat float granite trousers dragon tiger}    
+    post_words = %w{in ox et by rat tar al s ty ax ak an at de er ers}
+    
+    words[rand(words.size)] + post_words[rand(post_words.size)]
+  end
+  
+  def captcha(word)
+    str = String.new
+    
+    word.each_byte do |char|
+      str << char.chr.upcase
+      str << "<del>#{(rand(26) + 97).chr.upcase}</del>" if rand(2) == 1
+    end
+    
+    str
+  end
+  
   def title
     if @title
       @title + " : " + APP_CONFIG[:app_title]
@@ -15,11 +33,12 @@ module ApplicationHelper
   def safe(txt)
     # Poor mans' sanitization!
     
-    txt = h(txt)
+    txt = "<p>#{h(txt)}</p>"
     txt.gsub!(/\&quot;/, '"')
     txt.gsub!(/\&gt;/, '>')
     
-    txt.gsub!(/\n/, '<br />')
+    txt.gsub!(/\n[\r\n]+/, "\n")
+    txt.gsub!(/\n/, '</p><p>')
     
     txt.gsub!(/\&lt;a href/, '<a href')
     txt.gsub!(/\&lt;\/a>/, '</a>')

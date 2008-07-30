@@ -1,30 +1,23 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :comments
+  map.resources :items,
+                :as         => 'artikels',
+                :path_names => { :new => 'nieuw', :edit => 'wijzig' } do |item|
+    item.resources :comments,
+                   :as         => 'reacties',
+                   :path_names => { :new => 'nieuw', :edit => 'wijzig' }
+  end
 
-  map.resources :categories
-
-  map.connect '/page/:page', :controller => 'items', :action => 'index'
-
+  map.connect '/pagina/:page', :controller => 'items', :action => 'index'
 
   map.root :controller => 'items'
 
-
-  map.resources :items
-
   map.resources :users
-  map.resource :session, :controller => 'session'
-
+  map.resource :session, :controller => 'session'  
   
+  map.signup '/registreren', :controller => 'users', :action => 'new'
+  map.login '/inloggen', :controller => 'session', :action => 'new'
+  map.logout '/uitloggen', :controller => 'session', :action => 'destroy'
   
-  map.signup '/signup', :controller => 'users', :action => 'new'
-  map.login '/login', :controller => 'session', :action => 'new'
-  map.logout '/logout', :controller => 'session', :action => 'destroy'
-  
-  map.tag '/tag/:id', :controller => 'items', :action => 'list_for_tags'
-  map.tags '/tags/:id', :controller => 'items', :action => 'list_for_tags'
-  map.tags_by_folders '/tags/*id', :controller => 'items', :action => 'list_for_tags'
-  map.search '/search/:id', :controller => 'items', :action => 'search'
-  map.category '/category/:id', :controller => 'items', :action => 'category'
   
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -57,6 +50,6 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  # map.connect ':controller/:action/:id'
+  # map.connect ':controller/:action/:id.:format'
 end

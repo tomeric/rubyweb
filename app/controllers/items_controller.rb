@@ -3,8 +3,6 @@ class ItemsController < ApplicationController
   before_filter :admin_required, :only => [:edit, :destroy, :update]
   before_filter :do_pagination, :only => [:index, :list_for_tag, :list_for_tags, :search]
   
-  layout 'main'
-  
   # GET /items
   # GET /items.xml
   def index
@@ -66,7 +64,7 @@ class ItemsController < ApplicationController
       @item.user = current_user
     else
       @item.content = @item.content.gsub(/((<a\s+.*?href.+?\".*?\")([^\>]*?)>)/, '\2 rel="nofollow" \3>')
-      @item.byline = "Anonymous Coward" if @item.byline.empty?
+      @item.byline = "Anonieme Bangerd" if @item.byline.empty?
       if @item.byline.length > 18
         @item.errors.add("Byline")
         render :action => 'new'
@@ -88,7 +86,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        flash[:notice] = 'Item was successfully posted.'
+        flash[:notice] = 'Artikel is succesvol aangemaakt.'
         format.html { redirect_to(@item) }
         format.xml  { render :xml => @item, :status => :created, :location => @item }
       else
@@ -105,7 +103,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.update_attributes(params[:item])
-        flash[:notice] = 'Item was successfully updated.'
+        flash[:notice] = 'Artikel is succesvol ge-update.'
         format.html { redirect_to(@item) }
         format.xml  { head :ok }
       else
@@ -126,36 +124,6 @@ class ItemsController < ApplicationController
       format.xml  { head :ok }
       format.json { head :ok }
     end
-  end
-  
-  def list_for_tags
-    @tag_array = [*params[:id]].collect { |a| a.split(/\s+|\++/) }.flatten
-    @items_count = Item.count_all_for_all_tags(@tag_array)
-    go_404 and return if @items_count == 0
-    @items = Item.find_all_for_all_tags(@tag_array, { :order => 'created_at DESC' }.merge(@pagination_options))
-    @noindex = true
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @items }
-    end    
-  end
-  
-  def search
-    @items_count = Item.count(:conditions => ['title LIKE ? OR tags LIKE ?', "%#{params[:id]}%", "%#{params[:id]}%"])
-    @items = Item.find(:all, {:conditions => ['title LIKE ? OR tags LIKE ?', "%#{params[:id]}%", "%#{params[:id]}%"]}.merge(@pagination_options))
-    @noindex = true
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @items }
-    end    
-  end
-  
-  def category
-    @category = Category.find_by_name(params[:id])
-    go_404 and return unless @category
-    @items = Item.find_all_for_all_tags(@category.query.split(/\s/))
   end
   
   protected

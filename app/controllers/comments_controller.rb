@@ -1,51 +1,48 @@
 class CommentsController < ApplicationController
   before_filter :admin_required, :except => [:create]
+  before_filter :load_item
   
-  layout 'main'
-  
-  # GET /comments/1/edit
+  # GET /item/1/comments/1/edit
   def edit
-    @comment = Comment.find(params[:id])
+    @comment = @item.comments.find(params[:id])
   end
 
-  # POST /comments
-  # POST /comments.xml
+  # POST /item/1/comments
+  # POST /item/1/comments.xml
   def create
-    @comment = Comment.new(params[:comment])
-    @item = Item.find(params[:item_id])
-    @comment.item = @item
+    @comment = @item.comments.new(params[:comment])
     
     if logged_in?
       @comment.user = current_user
     else
-      @comment.byline = "Anonymous Coward" if @comment.byline.empty?
+      @comment.byline  = "Anonieme Bangerd" if @comment.byline.empty?
       @comment.content = @comment.content.gsub(/((<a\s+.*?href.+?\".*?\")([^\>]*?)>)/, '\2 rel="nofollow" \3>')
+      
       unless Digest::SHA1.hexdigest(params[:captcha].upcase.chomp)[0..5] == params[:captcha_guide]
         @item.errors.add("Word")
-        flash.now[:notice] = "Your comment could not be posted. Scroll down, correct, and retry. Did you get the CAPTCHA right?"
+        flash.now[:notice] = "Je reactie kon niet geplaatst worden. Scroll naar beneden, corrigeer en probeer het opnieuw. Heb je de CAPTCHA correct overgetikt?"
         render :template => 'items/show'
         return
       end
-    end
-    
+    end   
 
     respond_to do |format|
       if @comment.save
-        flash[:notice] = 'Comment was successfully created.'
+        flash[:notice] = 'Reactie is succesvol geplaatst.'
         format.html { redirect_to(@comment.item) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
-        flash.now[:notice] = "Your comment could not be posted. Scroll down, correct, and retry."
+        flash.now[:notice] = "Je reactie kon niet geplaatst worden. Scroll naar beneden, corrigeer en probeer het opnieuw."
         format.html { render :template => 'items/show' }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # PUT /comments/1
-  # PUT /comments/1.xml
+  # PUT /item/1/comments/1
+  # PUT /item/1/comments/1.xml
   def update
-    @comment = Comment.find(params[:id])
+    @comment = @item.comments.find(params[:id])
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
@@ -59,8 +56,8 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.xml
+  # DELETE /item/1/comments/1
+  # DELETE /item/1/comments/1.xml
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
@@ -69,5 +66,11 @@ class CommentsController < ApplicationController
       format.html { redirect_to(comments_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  protected
+  
+  def load_item
+    @item = Item.find(params[:item_id])
   end
 end

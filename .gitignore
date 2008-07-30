@@ -10,3 +10,6 @@ doc/plugins/*
 doc/*
 #db/sphinx/development/*
 Capfile
+.bash_logout
+.bash_profile
+.bashrc
