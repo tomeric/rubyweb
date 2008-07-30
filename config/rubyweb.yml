@@ -1,0 +1,15 @@
+app_name: rubyweb
+app_title: RubyWeb
+default_title: "RubyWeb : Community-onderhouden Ruby Nieuws"
+sub_title: "Community-onderhouden Ruby Nieuws"
+app_url: http://www.rubyweb.nl/
+rss_url: http://www.rubyweb.nl/artikels.rss
+meta_keywords: "ruby, ruby news, ruby blog, rails, rubyonrails"
+meta_author: "Tom-Eric Gerritsen"
+body_class: rubyweb
+ga: UA-2237791-7
+sidebar: |-
+  <h3>Wat?</h3><p>RubyWeb is een community gestuurde Ruby link website. Nieuws wordt niet automatisch toegevoegd, maar gekozen en gerangschikt door de community, wat resulteert in hogere kwaliteit link dan <a href="http://ruby.reddit.com/">sociale bookmarking sites</a>.</p>
+  <h3>Hoe?</h3><p>Bekijk de links, plaats reacties, of maak zelf <a href="/items/new">een nieuwe post</a>. Je hoeft niet ingelogd te zijn!</p>
+  <p>Als je niet ingelogd bent, dan wordt er niet naar je homepage gelinkt en al je links krijgen het <code>rel="nofollow"</code> attribuut om spammen te voorkomen. Er wordt tevens gebruik gemaakt van CAPTCHA's!</p>
+  <h3>Wie?</h3><p>RubyWeb is gebouwd door <a href="http://www.i76.nl/over-i76/tom-eric-gerritsen">Tom-Eric Gerritsen</a> van <a href="http://www.i76.nl/">i76</a>, maar is ontworpen als website voor en door de Nederlandse Ruby community. RubyWeb is <a href="http://github.com/i76/rubyflow/tree/master">open source</a> en gebaseerd op het door <a href="http://peterc.org/">Peter Cooper</a> ontwikkelde <a href="http://www.rubyflow.com/">RubyFlow</a>.</p>

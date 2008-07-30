@@ -1,0 +1,4 @@
+<blockquote class="comment">
+  <%= safe(comment.content) %>
+  <p class="metadata"><cite><%= comment.user ? %Q{<a href="#{comment.user.url}">#{comment.user.login}</a>} : comment.byline %></cite> - <%= comment.created_at.strftime("%d %B, %Y %R") %></p>
+</blockquote>
