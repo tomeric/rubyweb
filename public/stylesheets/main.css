@@ -4,6 +4,7 @@ body { margin: 0 0 20px 0; padding: 0; }
 
 a { color: #2266bb; }
 a:hover { color: #ff0000; }
+a img { border: 0; }
 
 h1, h2, h3 { font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin: 8px 0px 14px 0px; }
 
@@ -44,6 +45,7 @@ dl.questions dd.help { border-left: 3px solid #999; padding: 8px 16px; font-size
 .article p { margin: 8px 0 0 0; }
 .article p:first-child { margin-top: 0; }
 .article a { font-weight: bold; }
+.article a:visited { text-decoration: none; }
 
 p.metadata { color: #999; margin: 0; margin-top: 0; padding: 0; padding-bottom: 0px; font: 11px verdana,arial,sans-serif; line-height: 17x; }
 p.metadata a { color: #888; }
