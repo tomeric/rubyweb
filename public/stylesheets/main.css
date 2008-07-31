@@ -35,9 +35,9 @@ dl.questions dd.note { font-size: 11px; margin: -16px 0 16px 0; }
 dl.questions dd.help { border-left: 3px solid #999; padding: 8px 16px; font-size: 13px; background-color: #ffc; font-family: verdana; line-height: 15px; letter-spacing: 0px; }
 
 /* captcha */
-#captcha .display { background-color: #c00; color: #fff; font-size: 24px; padding: 12px; width: 280px; height: 24px; border: 1px solid #000; text-align: center; letter-spacing: 5px; }
-#captcha .display del { display: none; }
-#captcha .captcha-example { background: #c00; color: #fff; text-transform: uppercase; }
+#captcha-container .display { background-color: #c00; color: #fff; font-size: 24px; padding: 12px; width: 280px; height: 24px; border: 1px solid #000; text-align: center; letter-spacing: 5px; }
+#captcha-container .display del { display: none; }
+#captcha-container .captcha-example { background: #c00; color: #fff; text-transform: uppercase; }
 
 /* items */
 .items { margin: 0; padding: 0 0 0 25px; list-style: none; }

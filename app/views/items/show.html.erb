@@ -21,7 +21,7 @@
   <%= render :partial => 'comments/comment', :collection => @item.comments %>
   
   <% form_for([@item, @comment]) do |f| %>
-    <fieldset class="comment" id="new_comment">
+    <fieldset class="comment">
       <h3>Plaats een reactie</h3>
       
       <% unless @comment.errors.empty? %>
