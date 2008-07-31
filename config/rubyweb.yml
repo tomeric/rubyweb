@@ -13,4 +13,4 @@ sidebar: |-
   <h3>Hoe?</h3><p>Bekijk de links, plaats reacties, of maak zelf <a href="/artikels/nieuw">een nieuw artikel</a>. Je hoeft niet ingelogd te zijn!</p>
   <p>Als je niet ingelogd bent, dan wordt er niet naar je homepage gelinkt en al je links krijgen het <code>rel="nofollow"</code> attribuut om spammen te voorkomen. Er wordt tevens gebruik gemaakt van CAPTCHA's!</p>
   <h3>Wie?</h3><p>RubyWeb is gebouwd door <a href="http://www.i76.nl/over-i76/tom-eric-gerritsen">Tom-Eric Gerritsen</a> van <a href="http://www.i76.nl/">i76</a>, maar is ontworpen als website voor en door de Nederlandse Ruby community. RubyWeb is <a href="http://github.com/i76/rubyflow/tree/master">open source</a> en gebaseerd op het door <a href="http://peterc.org/">Peter Cooper</a> ontwikkelde <a href="http://www.rubyflow.com/">RubyFlow</a>.</p>
-  <p><a href="http://feeds.feedburner.com/RubyWeb"><img src="http://feeds.feedburner.com/~fc/Rubyflow?bg=cc0000&amp;fg=FFFFFF&amp;anim=0" alt="RubyWeb RSS Feed"></a></p>
+  <p><a href="http://feeds.feedburner.com/RubyWeb"><img src="http://feeds.feedburner.com/~fc/RubyWeb?bg=cc0000&amp;fg=FFFFFF&amp;anim=0" alt="RubyWeb RSS Feed"></a></p>
