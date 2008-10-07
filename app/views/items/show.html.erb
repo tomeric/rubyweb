@@ -1,4 +1,5 @@
-<div class="post">
+<% @title = @item.title %>
+<div class="article">
   <h1><%=h @item.title %></h1>
   <p class="date"><%= @item.created_at.strftime("%d %B, %Y") %></p>
   
@@ -13,7 +14,8 @@
       <%= @item.byline %>
     <% end %>
     om <%= @item.created_at.strftime("%R") %> - <%= link_to pluralize(@item.comments.size, 'reactie'), item_url(@item) %>
-    <% if admin? %> | <%= link_to 'wijzigen', edit_item_path(@item) %> | <%= link_to 'verwijderen', @item, :confirm => 'Weet je het zeker?', :method => :delete %><% end %>
+    <% if editable?(@item) %> | <%= link_to('Wijzigen', edit_item_path(@item)) %><% end %>
+    <% if admin?%> | <%= link_to('Verwijderen', @item, :confirm => 'Weet je het zeker?', :method => :delete) %><% end %>
   </p>
 </div>
 
