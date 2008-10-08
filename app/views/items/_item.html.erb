@@ -3,7 +3,8 @@
   <p class="metadata">
     Geplaatst door: <%= item.user ? %Q{<a href="#{item.user.url}" #{"rel=\"nofollow\"" unless item.user.approved_for_feed == 1}>#{item.user.login}</a>} : item.byline %>
     om <%= item.created_at.strftime("%R") %> - <a href="<%= url_for item_url(item) %>"><%= pluralize item.comments.size, 'reactie' %></a>
-    <% if admin? %>| <%= link_to('Wijzigen', edit_item_path(item)) %> | <%= link_to('Verwijderen', item, :confirm => 'Weet je het zeker?', :method => :delete) %><% end %>
+    <% if editable?(item) %> | <%= link_to('Wijzigen', edit_item_path(item)) %><% end %>
+    <% if admin?%> | <%= link_to('Verwijderen', item, :confirm => 'Weet je het zeker?', :method => :delete) %><% end %>
   </p>
 </li>
 

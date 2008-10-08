@@ -4,14 +4,9 @@
   <dl class="questions">
     <dt><%= f.label :title, 'Titel' %></dt>
     <dd><%= f.text_field :title %></dd>
-    <dt><%= f.label :url, '<abbr title="Uniform Resource Locator">URL</abbr>' %></dt>
-    <dd><%= f.text_field :url %></dd>
     <dt><%= f.label :content, 'Inhoud' %></dt>
     <dd><%= f.text_area :content %></dd>
   </dl>
   <p class="submit"><%= f.submit "Wijzigen" %></p>
 <% end %>
-<p>
-  <%= link_to 'Bekijk', @item %> |
-  <%= link_to 'Terug', items_path %>
-</p>
+<p><%= link_to 'Bekijk deze post', @item %></p>
