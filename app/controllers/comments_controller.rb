@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
       @comment.byline  = "Anonieme Bangerd" if @comment.byline.empty?
       @comment.content = @comment.content.gsub(/((<a\s+.*?href.+?\".*?\")([^\>]*?)>)/, '\2 rel="nofollow" \3>')
       
-      unless Digest::SHA1.hexdigest(params[:captcha].upcase.chomp)[0..5] == params[:captcha_guide]
+      unless verify_recaptcha
         @item.errors.add("Word")
         flash.now[:notice] = "Je reactie kon niet geplaatst worden. Scroll naar beneden, corrigeer en probeer het opnieuw. Heb je de CAPTCHA correct overgetikt?"
         render :template => 'items/show'
