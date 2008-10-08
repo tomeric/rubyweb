@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(:version => 3) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                   :default => "",    :null => false
-    t.string   "email",                                   :default => "",    :null => false
+    t.string   "login",                                                      :null => false
+    t.string   "email",                                                      :null => false
     t.string   "fullname"
     t.string   "url"
     t.string   "crypted_password",          :limit => 40
