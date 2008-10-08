@@ -65,7 +65,7 @@ class ItemsController < ApplicationController
     else
       @item.anonymous!
       
-      unless Digest::SHA1.hexdigest(params[:captcha].upcase.chomp)[0..5] == params[:captcha_guide]
+      unless verify_recaptcha
         flash.now[:error] = 'Het woord dat je hebt overgetikt komt niet overeen met het woord dat werd weergegeven. Probeer het opnieuw met het juiste woord.'
 
         render(:action => 'new') and return

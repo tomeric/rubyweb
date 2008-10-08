@@ -1,8 +1,1 @@
-<% word = random_word %>
-<div id="captcha-container">
-  <p class="display"><%= captcha(word) %></p>
-  <dl class="questions">
-    <dt><label for="captcha">Tik het woord over dat in <span class="captcha-example">wit op rood</span> staat hierboven.</label></dt>
-    <dd><%= text_field_tag "captcha" %> <%= hidden_field_tag "captcha_guide", Digest::SHA1.hexdigest(word.upcase)[0..5] %></dd>
-  </dl>
-</div>
+<%= recaptcha_tags %>
