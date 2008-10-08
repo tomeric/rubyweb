@@ -1,25 +1,51 @@
+<h1>Gebruikersoverzicht</h1>
 <table class="users">
   <thead>
     <tr>
       <th class="id">ID</th>
       <th class="login">Login</th>
+      <th class="email">E-mail</th>
       <th class="url"><abbr title="Uniform Resource Locator">URL</abbr></th>
       <th class="created-at">Registratiedatum</th>
       <th class="approved">Goedgekeurd</th>
+      <th class="options" colspan="3">Opties</th>
     </tr>
   </thead>
   <tbody>
   <%- @users.each do |user| -%>
     <tr>
-      <td><%= user.id %></td>
-      <td><%= user.login %></td>
-      <td><%= link_to(user.url, user.url) %></td>
-      <td><%= user.created_at.strftime("%d-%m-%Y") %></td>
-      <td><%= user.approved_for_feed %></td>
-      <td>
-        <%= link_to 'goedkeuren', :action => 'approve', :id => user.id %> |
-        <%= link_to 'afkeuren', :action => 'disapprove', :id => user.id %> |
-        <%= link_to 'verwijderen', :action => 'destroy', :id => user.id, :method => :post, :confirm => 'Weet je het zeker?' %>
+      <td class="id"><%= user.id %></td>
+      <td class="login"><%= user.login %></td>
+      <td class="email"><%= link_to_if user.email?, user.email, 'mailto:' + user.email %></td>
+      <td class="url"><%= link_to(user.url, user.url) %></td>
+      <td class="created-at"><%= user.created_at.strftime("%d-%m-%Y") %></td>
+      <td class="approved"><%= user.approved_for_feed ? 'Ja' : 'Nee' %></td>
+      <td class="edit">
+        <%= link_to 'wijzigen',
+                    :action => 'edit',
+                    :id     => user %>
+      </td>
+      <td class="approve-or-disapprove">
+        <% if user.approved_for_feed? %>
+          <%= link_to 'afkeuren',
+                      { :action => 'disapprove',
+                        :id     => user },
+                      { :method => :put } %>
+        <% else %>
+          <%= link_to 'goedkeuren',
+                      { :action => 'approve',
+                        :id     => user },
+                      { :method => :put }%>
+        <% end %>
+      </td>
+      <td class="destroy">
+        <%= link_to_unless user == current_user,
+                           'verwijderen',
+                           { :action  => 'destroy',
+                             :id      => user },
+                           { :class   => 'ruby',
+                             :method  => :delete,
+                             :confirm => 'Weet je het zeker?' } %>
       </td>
     </tr>
   <%- end -%>

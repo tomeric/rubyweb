@@ -1,0 +1,10 @@
+<h1>Inloggegevens vergeten?</h1>
+<p>Ben je je wachtwoord en/of gebruikersnaam vergeten? Vul hieronder je e-mailadres en we sturen je een e-mailbericht waarmee je je wachtwoord kan herstellen.</p>
+
+<% form_for(@user, :url => forgetful_users_path) do |f| %>
+  <dl class="questions">
+    <dt><%= f.label :email, 'E-mailadres' %></dt>
+    <dd><%= f.text_field :email %></dd>
+  </dl>
+  <p class="submit"><%= submit_tag 'Verzenden &raquo;' %></p>
+<% end %>

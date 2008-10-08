@@ -1,6 +1,3 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
 
@@ -10,14 +7,20 @@ class ApplicationController < ActionController::Base
   
   include AuthenticatedSystem
   
-  def go_404
-    render :text => '404 Not Found', :status => 404
-  end
+  protected
   
   def items_per_page
     30
   end
   helper_method :items_per_page
+  
+  def render_404
+    render(:status => 404, :text => '404 Not Found')
+  end
+  
+  def render_403
+    render(:status => 403, :text => '403 Forbidden')    
+  end
   
   # do_pagination is used in before_filters by actions that use pagination
   # If a "page" param is provided, use that to set the page, otherwise assume we're on page 1

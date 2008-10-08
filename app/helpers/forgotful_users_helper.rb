@@ -1,0 +1,2 @@
+module ForgotfulUsersHelper
+end

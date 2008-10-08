@@ -1,5 +1,6 @@
 app_name: rubyweb
 app_title: RubyWeb
+app_email: mailer@rubyweb.nl
 default_title: "RubyWeb : Community-onderhouden Ruby Nieuws"
 sub_title: "Community-onderhouden Ruby Nieuws"
 app_url: http://www.rubyweb.nl/

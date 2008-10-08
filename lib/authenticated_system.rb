@@ -7,7 +7,7 @@ module AuthenticatedSystem
     end
     
     def admin?
-      logged_in? && current_user.admin == 1
+      logged_in? && current_user.admin?
     end
 
     # Accesses the current user from the session.  Set it to :false if login fails
@@ -72,6 +72,8 @@ module AuthenticatedSystem
       respond_to do |format|
         format.html do
           store_location
+
+          flash[:error] = "U heeft niet de rechten om van deze funcionaliteit gebruik te maken. Log in met een gebruiker die wel deze rechten heeft."
           redirect_to new_session_path
         end
         format.any do

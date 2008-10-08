@@ -1,0 +1,35 @@
+<% @title = 'Gebruikersgegevens' %>
+<h1><% if admin? %>Gebruikersgegevens van <%= @user.login %><% else %>Gebruikersgegevens<% end %></h1>
+
+<% form_for(@user) do |f| -%>
+  <h2>Profiel wijzigen</h2>
+  <dl class="questions">
+    <% if admin? %>
+      <dt><%= f.label :login, 'Gebruikersnaam (alle alfanumerieke karakters en underscores, geen spaties)' %></dt>
+      <dd><%= f.text_field :login %></dd>
+      <%= form_error(f, :login) %>
+      <dd class="note">Gebruikersnamen zijn hoofdlettergevoelig, maar je mag hoofdletters en underscores gebruiken waar dat nodig is (<abbr title="bijvoorbeeld">bv.</abbr> TomEric, Jan_Daan, daan1976).</dd>
+    <% end %>
+    <dt><%= f.label :email, 'E-mailadres' %></dt>
+    <dd><%= f.text_field :email %></dd>
+    <%= form_error(f, :email) %>
+    <dt><%= f.label :url, '<abbr title="Uniform Resource Locator">URL</abbr> / Jouw website (begin met http://)' %></dt>
+    <dd><%= f.text_field :url %></dd>
+    <%= form_error(f, :url)%>
+    <dd class="note">Deze <abbr>URL</abbr> wordt op diverse plekken binnen deze site gelinkt vanaf je gebruikersnaam.</dd>
+  </dl>
+  <p class="submit"><%= submit_tag 'Gegevens wijzigen' %></p>
+<% end %>
+
+<% form_for(@user) do |f| %>
+  <h2>Wachtwoord wijzigen</h2>
+  <dl class="questions">
+    <dt><%= f.label :password, 'Wachtwoord' %></dt>
+    <dd><%= f.password_field :password %></dd>
+    <%= form_error(f, :password) %>
+    <dt><%= f.label :password_confirmation, 'Herhaal wachtwoord' %></dt>
+    <dd><%= f.password_field :password_confirmation %></dd>
+    <%= form_error(f, :password_confirmation) %>
+  </dl>
+  <p class="submit"><%= submit_tag 'Wachtwoord wijzigen' %></p> 
+<% end -%>

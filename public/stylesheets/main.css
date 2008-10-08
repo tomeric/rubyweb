@@ -60,6 +60,16 @@ p.metadata a { color: #888; }
 .comment .metadata { margin: 0 0 0 0; color: #000; text-align: right; }
 .comment .metadata cite { font-style: normal; }
 
+/* tables */
+table { border-collapse: collapse; }
+table td,
+table th { padding: 4px 8px; vertical-align: top; text-align: left; }
+table th { background: #c00; color: #fff; }
+table td { border-bottom: 1px solid #c00; }
+
+table th.options { text-align: center; }
+
+
 /* pagination */
 .pagination { overflow: hidden; height: 20px; }
 .pagination .back { float: left; }

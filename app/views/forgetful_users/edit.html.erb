@@ -1,0 +1,17 @@
+<h1>Inloggegevens herstellen</h1>
+<p>Je kan hieronder het wachtwoord aanpassen van <strong><%= @user.login %></strong></p>
+<% form_for(@user, :url => forgetful_user_path(@user)) do |f| %>
+  <%= error_messages_for :user %>
+  <dl class="questions">
+    <dt><%= f.label :password, 'Nieuw wachtwoord' %></dt>
+    <dd><%= f.password_field :password %></dd>
+    <%= form_error(f, :password) %>
+    <dt><%= f.label :password_confirmation, 'Nieuw wachtwoord herhalen' %></dt>
+    <dd><%= f.password_field :password_confirmation %></dd>
+    <%= form_error(f, :password_confirmation) %>
+  </dl>
+  <p class="submit">
+    <%= hidden_field_tag :token, @user.reset_password_token %>
+    <%= submit_tag 'Wijzigen &raquo;' %>
+  </p>
+<% end %>

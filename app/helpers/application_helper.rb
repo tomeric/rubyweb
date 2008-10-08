@@ -1,7 +1,18 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def form_error(object, field)
+    object = object.object if object.respond_to?(:object)
+    
+    if object.errors[field]
+      error = object.errors[field]
+      error = error.join(', ') if error.is_a?(Array)
+      
+      "<dd class=\"error-message\">#{error}</dd>"
+    end
+  end
+
   def editable?(item)
-    admin? || item.user == current_user
+    admin? || item.is_editable_by(current_user)
   end
   
   def random_word

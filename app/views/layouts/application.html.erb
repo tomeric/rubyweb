@@ -23,17 +23,23 @@
       <p id="nav">
   		  <%= link_to 'Home', root_url %> | <a href="<%= APP_CONFIG[:rss_url] %>">RSS Feed</a> | 
         <%= link_to 'Nieuw Artikel', new_item_path, :class => 'ruby' %> |
+        <% if admin? %>
+          <%= link_to 'Gebruikersoverzicht', users_path %> |
+        <% end %>
         <% if logged_in? %>
-          <%= link_to 'Uitloggen', logout_url %>
+          <%= link_to 'Gebruikersgegevens', edit_user_path(current_user) %> |
+          <%= link_to 'Uitloggen', logout_path %>
         <% else %>
-          <%= link_to 'Registreren', signup_url %> | <%= link_to 'Inloggen', login_url %>
+          <%= link_to 'Registreren', signup_path %> | <%= link_to 'Inloggen', login_url %>
         <% end %>
       </p>
     </div>
 
     <div id="page">
       <div id="content">
-        <% if flash[:notice] %><p class="message"><%= flash[:notice] %></p><% end %>  
+        <% flash.each do |class_name, contents| %>
+          <p class="message <%= class_name %>"><%= contents %></p>
+        <% end %> 
         <%= yield %>
       </div>
 

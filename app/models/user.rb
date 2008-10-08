@@ -2,22 +2,50 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
-
-  validates_presence_of     :login #, :email
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :login,    :within => 3..40
-  #validates_length_of       :email,    :within => 3..100
-  validates_uniqueness_of   :login, :case_sensitive => false
-  validates_format_of       :login, :with => /^\w+$/
-  validates_format_of       :url, :with => /^(|http\:\/\/.*)$/
-  before_save :encrypt_password
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :identity_url, :url, :fullname
+  attr_accessible :login, :email, :password, :password_confirmation, :url
+
+  # validations:
+  validates_presence_of     :login, :email
+
+  validates_presence_of     :password,
+                            :if => :password_required?
+
+  validates_presence_of     :password_confirmation,
+                            :if => :password_required?
+
+  validates_confirmation_of :password,
+                            :if => :password_required?
+
+  validates_length_of       :password,
+                            :within => 4..40,
+                            :if     => :password_required?
+
+  validates_length_of       :login,
+                            :within => 3..40,
+                            :if     => :login?
+
+  validates_uniqueness_of   :login,
+                            :case_sensitive => false,
+                            :if             => :login?
+
+  validates_format_of       :login,
+                            :with => /^\w+$/,
+                            :if   => :login?
+
+  validates_format_of       :url,
+                            :with    => URI.regexp,
+                            :if      => :url?,
+                            :message => 'is geen geldige <abbr>URL</abbr>, een geldige <abbr>URL</abbr> begint met http://'
+  
+  validates_format_of       :email,
+                            :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i,
+                            :if   => :email?
+  
+  # callbacks:
+  before_save :encrypt_password
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
@@ -63,18 +91,21 @@ class User < ActiveRecord::Base
     self.remember_token            = nil
     save(false)
   end
+  
+  def reset_password_token
+    encrypt(self.login + self.crypted_password)
+  end
 
   protected
-    # before filter 
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
-      
-    def password_required?
-      crypted_password.blank? || !password.blank?
-    end
+
+  # before filter 
+  def encrypt_password
+    return if password.blank?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
+    self.crypted_password = encrypt(password)
+  end
     
-    
+  def password_required?
+    crypted_password.blank? || !password.blank?
+  end
 end
