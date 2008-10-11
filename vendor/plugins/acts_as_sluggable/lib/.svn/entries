@@ -1,0 +1,52 @@
+8
+
+dir
+6
+svn+ssh://svn@svn.i76.nl/home/svn/gitaar.nu/trunk/vendor/plugins/acts_as_sluggable/lib
+svn+ssh://svn@svn.i76.nl/home/svn/gitaar.nu
+
+
+
+2008-01-20T12:51:13.368295Z
+2
+svn
+
+
+svn:special svn:externals svn:needs-lock
+
+active_record_slug_patch.rb
+file
+
+
+
+
+2008-01-18T19:50:59.000000Z
+155badac398b8c0e8f9664bada48ec74
+2008-01-20T12:51:13.368295Z
+2
+svn
+
+acts_as_sluggable.rb
+file
+
+
+
+
+2008-01-18T19:50:59.000000Z
+d63c64e8c6ec325088d1ccba23f34e62
+2008-01-20T12:51:13.368295Z
+2
+svn
+
+slug.rb
+file
+
+
+
+
+2008-01-18T19:50:59.000000Z
+defdf48e13a4330d22104bec3272224b
+2008-01-20T12:51:13.368295Z
+2
+svn
+
