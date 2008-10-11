@@ -1,85 +1,0 @@
-8
-
-dir
-6
-svn+ssh://svn@svn.i76.nl/home/svn/gitaar.nu/trunk/vendor/plugins/acts_as_sluggable
-svn+ssh://svn@svn.i76.nl/home/svn/gitaar.nu
-
-
-
-2008-01-20T12:51:13.368295Z
-2
-svn
-
-
-svn:special svn:externals svn:needs-lock
-
-test
-dir
-
-Rakefile
-file
-
-
-
-
-2008-01-18T19:50:59.000000Z
-551a90559e8de3ba1566d2e7647e53c0
-2008-01-20T12:51:13.368295Z
-2
-svn
-
-init.rb
-file
-
-
-
-
-2008-01-18T19:50:59.000000Z
-f7dc04be2eb3732db51336e42b8d088a
-2008-01-20T12:51:13.368295Z
-2
-svn
-
-tasks
-dir
-
-lib
-dir
-
-install.rb
-file
-
-
-
-
-2008-01-18T19:50:59.000000Z
-cbe738c10eba4ae2da8c6859c9723e44
-2008-01-20T12:51:13.368295Z
-2
-svn
-
-uninstall.rb
-file
-
-
-
-
-2008-01-18T19:50:59.000000Z
-2a5fc883fe7f8dfe22ced24643d59ad4
-2008-01-20T12:51:13.368295Z
-2
-svn
-
-README
-file
-
-
-
-
-2008-01-18T19:50:59.000000Z
-983049796aef81769010827d5f3d84f0
-2008-01-20T12:51:13.368295Z
-2
-svn
-
