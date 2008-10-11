@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def editable?(item)
-    admin? || item.is_editable_by(current_user)
+    admin? || item.is_editable_by?(current_user)
   end
   
   def random_word
