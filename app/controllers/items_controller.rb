@@ -86,7 +86,7 @@ class ItemsController < ApplicationController
 
   # PUT /artikels/1
   # PUT /artikels/1.xml
-  def update
+  def update  
     respond_to do |format|
       if @item.update_attributes(params[:item])
         flash[:notice] = 'Artikel is succesvol ge-update.'
