@@ -1,4 +1,5 @@
 require 'digest/sha1'
+
 class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -8,41 +9,47 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :password, :password_confirmation, :url
 
   # validations:
-  validates_presence_of     :login, :email
-
-  validates_presence_of     :password,
-                            :if => :password_required?
-
-  validates_presence_of     :password_confirmation,
-                            :if => :password_required?
-
-  validates_confirmation_of :password,
-                            :if => :password_required?
-
-  validates_length_of       :password,
-                            :within => 4..40,
-                            :if     => :password_required?
-
-  validates_length_of       :login,
-                            :within => 3..40,
-                            :if     => :login?
-
-  validates_uniqueness_of   :login,
-                            :case_sensitive => false,
-                            :if             => :login?
-
-  validates_format_of       :login,
-                            :with => /^\w+$/,
-                            :if   => :login?
-
-  validates_format_of       :url,
-                            :with    => URI.regexp,
-                            :if      => :url?,
-                            :message => 'is geen geldige <abbr>URL</abbr>, een geldige <abbr>URL</abbr> begint met http://'
+  validates_presence_of :login, :email
   
-  validates_format_of       :email,
-                            :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i,
-                            :if   => :email?
+  validates_format_of   :email,
+                        :with    => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i,
+                        :if      => :email?,
+                        :message => 'is geen geldig e-mail adres'
+
+  # validations that apply when a password is required:
+  with_options :if => :password_required? do |user|
+    user.validates_presence_of     :password
+
+    user.validates_presence_of     :password_confirmation
+
+    user.validates_confirmation_of :password
+
+    user.validates_length_of       :password,
+                                   :within => 4..40
+  end
+
+  # validations that apply when a login is present:
+  with_options :if => :login? do |user|
+    user.validates_length_of     :login,
+                                 :within => 3..40
+
+    user.validates_uniqueness_of :login,
+                                 :case_sensitive => false
+
+    user.validates_format_of     :login,
+                                 :with => /^\w+$/
+  end
+  
+  # validations that apply when a URL is present:
+  with_options :if => :url? do |user|
+    user.validates_format_of :url,
+                             :with    => URI.regexp,
+                             :message => 'is geen geldige <abbr>URL</abbr>, een geldige <abbr>URL</abbr> begint met http://'
+  
+    user.validates_format_of :url,
+                             :with    => /^http(s)?:\/\//,
+                             :message => 'is geen geldige <abbr>URL</abbr>, een geldige <abbr>URL</abbr> begint met http://'                             
+  end
   
   # callbacks:
   before_save :encrypt_password
