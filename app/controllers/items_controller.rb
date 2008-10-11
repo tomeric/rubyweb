@@ -116,13 +116,13 @@ class ItemsController < ApplicationController
   # Load's the item before an action is executed. If the item is not found, 
   # render a 404.
   def load_item
-    @item = Item.find(params[:id]) rescue Item.find_by_name(params[:id])
+    @item = Item.find(params[:id]) rescue nil
     
     render_404 unless @item
   end
 
   # Check if an item can be edited by the current user. If not, render a 403.
   def permission_required    
-    render_403 unless admin? || @item.is_editable_by(current_user)
+    render_403 unless admin? || @item.is_editable_by?(current_user)
   end
 end

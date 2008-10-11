@@ -24,25 +24,25 @@ module ActiveRecord::Acts::ActsAsSluggable
 
   private      
     def add_callbacks
-      before_save :set_slug
+      before_save :set_slug, :if => :slug_column?
     end
   end
 
   module InstanceMethods     
     def slug
-      return @slug unless @slug.nil?
-
-      return super if has_sluggable_column? and !super.blank?
-      self.slug = self.send(self.class.sluggable_attribute).to_slug
+      if slug_column?
+        read_attribute(:slug)
+      else
+        self.id.to_s + "_" + self.send(self.class.sluggable_attribute).to_slug
+      end
     end
 
-    def slug=(slug)      
-      super(slug) if has_sluggable_column?
-      @slug = slug
+    def slug=(slug)
+      write_attribute(:slug, slug) if slug_column?      
     end
 
     def to_param
-      if has_sluggable_column?
+      if self.slug
         self.slug
       else
         self.id
@@ -50,12 +50,28 @@ module ActiveRecord::Acts::ActsAsSluggable
     end
 
   private
-    def has_sluggable_column?
-      self.class.columns.map(&:name).include? 'slug'
+    def slug_column?
+      self.class.columns.any? { |c| c.name.to_s == 'slug' }
     end
           
     def set_slug
-      self.slug = self.send(self.class.sluggable_attribute).to_slug
+      slug = self.send(self.class.sluggable_attribute).to_slug
+        
+      existing = self.class.find_by_slug(slug)
+      
+      if existing && !(existing == self)
+        untainted = slug.dup
+        counter   = 2
+        
+        slug = "#{untainted}_#{counter}"        
+        
+        while (existing = self.class.find_by_slug(slug)) && !(existing == self)
+          counter += 1
+          slug = "#{untainted}_#{counter}"
+        end        
+      end
+      
+      self.slug = slug
     end
   end
 end

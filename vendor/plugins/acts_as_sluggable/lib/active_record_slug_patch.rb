@@ -2,17 +2,18 @@ module ActiveRecord
   class Base  
     def self.find_from_ids_with_coercion(ids, options)
       # this is probably very evil, but it makes Object.find('slug') work
-      if columns.map(&:name).include? 'slug'  and 
+      if columns.any? { |c| c.name.to_s == 'slug' } && 
          ids.length == 1 and ids.first.is_a?(String)
-        unless ids.first.to_i > 0
-	  find_by_slug(ids.first, options)
+	      unless ids.first.to_i > 0
+	        return find_by_slug(ids.first, options) 
         else
-          if result = find_by_slug(ids.first, options)
-            result
-          else
-            find_by_id(ids.first.to_i, options)
-          end
+          result = find_by_slug(ids.first, options)
+
+          return result if result
+          
+          find_by_id(ids.first.to_i, options)
         end
+
       else
         if ids.first.is_a?(Array)
           ids.first.map!{|id| id.nil? ? id : id.to_i }      
