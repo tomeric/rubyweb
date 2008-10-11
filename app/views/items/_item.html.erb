@@ -2,7 +2,7 @@
   <%= safe(item.content) %>
   <p class="metadata">
     Geplaatst door: <%= item.user ? %Q{<a href="#{item.user.url}"#{" rel=\"nofollow\"" unless item.user.approved_for_feed == 1}>#{item.user.login}</a>} : item.byline %>
-    om <%= item.created_at.strftime("%R") %> - <a href="<%= item_path(item) %>"><%= pluralize(item.comments.size, 'reactie') %></a>
+    om <%= item.created_at.strftime("%R") %> - <a href="<%= item_path(item) %>#comments"><%= pluralize(item.comments.size, 'reactie') %></a>
     <% if editable?(item) %> | <%= link_to('Wijzigen', edit_item_path(item)) %><% end %>
     <% if admin?%> | <%= link_to('Verwijderen', item, :confirm => 'Weet je het zeker?', :method => :delete) %><% end %>
   </p>
